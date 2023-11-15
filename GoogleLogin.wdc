@@ -1,0 +1,147 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : GoogleLogin
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x10b3724900a1bc7b
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAACMy4iWdYnmiBcWu2b+84SrzzgtQaCxzD7lm8c7yasOg+u4EN0huZeXQiIziQEe95jziINL38d7elmu7Mfhsul9TjksuYRoOdb3b6wSJ6IHrwRDVl/v/2Mxkfu56BaBpLvAZxW5mOemrzzVfQ==
+     code : |1-
+      // Classe GoogleLogin
+      // Gère l'authentification OAuth via Google
+      GoogleLogin est une Classe
+      	hérite de OAuthAppLogin
+      
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     internal_properties : CAAAAAgAAABYL3lJFX2XpGr1KTNgmhiF2qITBw9D1PguULEr9ChbkoH7v1nb8MkLuDNiL/zKk0bX+0Dp+Nyeu42PWMdDT0WIxzJE3Nj2rlvhESONFmsJl/RWbAAo04bJBMRnHVhUHqPYWowDg7Ej/qaEZD0/Kct+Gx24mjLrCTkMqt1KqkF+5qUay3NRZtL+AeK2DXKAM+5/BVf44Pxfp/c6YuS7XHDS0yT0bNOHO+GKGcBF7RLWrc/CmrUGNewRavTAyM8QGhyv5MOpCrKTVmlFSws7q6HWMT4GFvUvmeh9eKLJz17G1uZ8S49qtIS1HMdVhncBqwwErTNL/w==
+     procedure_id : 1203431183306898555
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur()
+      
+      	// Appel du constructeur OAuthAppLogin
+      	// Google utilise OAuth 2.0 depuis mi-2012
+      	Constructeur OAuthAppLogin("Google")
+      	
+      	// Décrit l'application OAuth
+      	// La clé et le code secret sont fournis par Google lors de la création d'une application Google
+      	// Ces informations sont accessibles depuis : https://code.google.com/apis/console/ , rubrique 'API Access'
+      	m_oServiceOAuth..ClientID					=  ""		// 'Client ID'
+      	m_oServiceOAuth..ClientSecret				=  ""		// 'Client secret'
+      
+      	dbgVérifieDifférence(m_oServiceOAuth..ClientID, "", "ClientID non renseigné")
+      	dbgVérifieDifférence(m_oServiceOAuth..ClientSecret, "", "ClientSecret non renseigné")
+      
+      	// Le flux OAuth 2.0 requiert des 'Scopes', pour Google, les 'Scopes' correspondent aux permissions
+      	// demandées par l'application pour se connecter à un compte utilisateur. 
+      	// Lors de la phase d'identification, Google demandera à l'utilisateur s'il accepte de donner accès aux
+      	// informations liées à ses permissions.
+      	// Documentation Google (https://developers.google.com/identity/protocols/OAuth2InstalledApp#formingtheurl) :
+      	// "Space-delimited set of scope strings."
+      	m_oServiceOAuth..Scope						= "profile " + 		// Accès au profil de l'utilisateur
+      											  	  "email"			// Accès à l'email de l'utilisateur
+      	
+      	// Décrit le service OAuth de Google
+      	// Le flux OAuth 2.0 nécessite deux points d'accès :
+      	// - un point d'accès pour authentifier l'utilisateur
+      	// - un point d'accès pour l'obtention d'un 'AccessToken'
+      	m_oServiceOAuth..URLAuth 					= "https://accounts.google.com/o/oauth2/auth"
+      	m_oServiceOAuth..URLToken					= "https://accounts.google.com/o/oauth2/token"
+      
+      	// L'URL de callback ('redirect_uri', 'callback URL', ou encore 'URL du site') dépend de la valeur spécifiée dans les paramètres de votre application OAuth
+      	// décrite sur les sites comme dev.twitter.com/apps, developers.facebook.com/apps, code.google.com/apis/console, ...
+      	// Généralement, l'URL doit exister et la valeur décrite ici doit absolument correspondre.
+      	m_oServiceOAuth..URLRedirection 			= "http://localhost:9000/"
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1203431183306964091
+     type_code : 28
+     code : |1-
+      PROCEDURE Destructeur()
+     type : 655360
+   -
+     name : LectureProfilUtilisateur
+     internal_properties : CAAAAAgAAADcQZameq/26XiWXklkgoNr5vQtLev0bwOpgPAhH0ngFr5TtfuPngdIWEqz7EqL2nkPM1W22SonB6B/IiTWECuGOPIGn5QpGUdBdQCDd/a3yaTdfKZzznfZogPmfyVTIKFjRebNk2OM65Tg6U1ART4MUFTt7YiJkpW7QxthrQMYpR9qhPDoVFduIyVydJXwTyDK0wd+fttDtHLCLTS1GSa+FNQS4U65vMunEpQgBjBHlfimEMuwM+6zsDQo1f2cm+bsCOgAVPJYYe4NeqDodoUguKPeoS+ia6PCV20uHLY6smBESXOMeNsf/hY=
+     procedure_id : 1203431183307029627
+     type_code : 12
+     code : |1-
+      // Résumé : Lit le profil utilisateur
+      // Syntaxe :
+      //[ <Résultat> = ] LectureProfilUtilisateur ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	OAuthWebUser : Informations sur l'utilisateur
+      //
+      PROCEDURE virtuelle protegee LectureProfilUtilisateur()
+      
+      	// Les informations basique du profil utilisateur Google sont décrites à l'adresse
+      	// https://developers.google.com/accounts/docs/OAuth2Login#userinfocall
+      		
+      	// Exemple :
+      	//	{
+      	//		"id": "00000000000000",
+      	//		"email": "fred.example@gmail.com",
+      	//		"verified_email": true,
+      	//		"name": "Fred Example",
+      	//		"given_name": "Fred",
+      	//		"family_name": "Example",
+      	//		"picture": "https://lh5.googleusercontent.com/-2Sv-4bBMLLA/AAAAAAAAAAI/AAAAAAAAABo/bEG4kI2mG0I/photo.jpg",
+      	//		"gender": "male",
+      	//		"locale": "en-US"
+      	//	}
+      	
+      	clInfo 		est un OAuthWebUser
+      	vInfo 		est un variant
+      	oRequête 	est une httpRequête
+      	oRéponse 	est une httpRéponse
+      	
+      	oRequête..URL 		= "https://www.googleapis.com/oauth2/v1/userinfo"
+      	oRequête..AuthToken = m_oToken
+      	oRequête..Méthode	= httpGet
+      	
+      	// Exécute la requête permettant d'obtenir les informations du profil de l'utilisateur connecté
+      	oRéponse <- HTTPEnvoie(oRequête)
+      	SI PAS ErreurDétectée _ET_ PAS oRéponse..CodeEtat >= 400 ALORS
+      		
+      		// Décode la réponse JSON contenu dans le message
+      		vInfo = JSONVersVariant(oRéponse..Contenu)
+      		
+      		// Recopie les données lues
+      		// Attention, les chaînes sont au format ANSI / UTF-8
+      		// Pour les afficher, il est nécessaire d'utiliser AnsiVersUnicode(<chaîne>, alphabetUTF8)
+      		clInfo.ID 			= vInfo.id
+      		clInfo.Nom 			= vInfo.name
+      		clInfo.NomAffiché	= vInfo.given_name
+      		clInfo.Image		= vInfo.picture
+      		clInfo.Email	 	= vInfo.email
+      	FIN
+      		
+      renvoyer clInfo
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x10d99a5b3869fcce
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

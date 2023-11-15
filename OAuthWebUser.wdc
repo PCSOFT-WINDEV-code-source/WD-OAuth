@@ -1,0 +1,58 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : OAuthWebUser
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x10b3707100938545
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAAC/+a7leVNhQptwK364g9B5v+EUgBjRUwej3s8EtCFnt3U47gz7BEnRbD9vILQCde7DvoIMwNjIarBfBuv6VjTW/zdqmfeq1pamoJBKcKiufD3vzuGEoWR1cuKz+hlP/SbXWyXXlJTyHtDiA1g=
+     code : |1-
+      // Classe OAuthWebUser
+      // Gère les informations de profil d'un utilisateur OAuth
+      OAuthWebUser est une Classe
+      
+      	public
+      		ID			est une chaine ansi		// Identifiant
+      		Nom			est une chaine ansi		// Nom
+      		Image		est une chaine ansi		// URL de l'image du profil
+      		NomAffiché	est une chaine ansi		// Nom affiché ou pseudonyme
+      		SiteWeb		est une chaine ansi		// URL du site Web
+      		Email		est une chaine ansi		// Adresse email
+      
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1203429156081403205
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur()
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1203429156081468741
+     type_code : 28
+     code : |1-
+      PROCEDURE Destructeur()
+     type : 655360
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x10d99a5b3860fcbe
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

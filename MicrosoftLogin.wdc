@@ -1,0 +1,140 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MicrosoftLogin
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x182dbb8405f851b3
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1-
+      // Classe GoogleLogin
+      // Gère l'authentification OAuth via Microsoft
+      MicrosoftLogin est une Classe
+      	hérite de OAuthAppLogin
+      
+      FIN
+      
+      CONSTANT LIVEAPI_VERSION = "5.0"
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     internal_properties : CAAAAAgAAAABMXYWbniuLFGhvQP1PRhEAsUYJP3Pfy5zgIZHX2nQrqGre5lI7mPcijxKGk3L6Rf7hEQNko12e81MsNCvuCy4yrwKPk2cEcKnaKbrk1WA1hS57HyXnUoBi+D4rMFvdsYeMEUS2bteIzvsuOBvhpiCWwHta/az0FAJ1irzlpHGLSL6tBxNOWZHoNIG8p7eLu0=
+     procedure_id : 1742254806572552627
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur()
+      
+      	// Appel du constructeur OAuthAppLogin
+      	Constructeur OAuthAppLogin("Microsoft")
+      	
+      	// Décrit l'application OAuth
+      	// La clé et le code secret sont fournis par Microsoft lors de la création d'une application Microsoft
+      	// Ces informations sont accessibles depuis : https://apps.dev.microsoft.com/?mkt=en-us#/appList
+      	m_oServiceOAuth..ClientID					= ""										// 'Client ID'
+      	m_oServiceOAuth..ClientSecret				= ""										// 'Client secret'
+      	
+      	dbgVérifieDifférence(m_oServiceOAuth..ClientID, "", "ClientID non renseigné")
+      	dbgVérifieDifférence(m_oServiceOAuth..ClientSecret, "", "ClientSecret non renseigné")
+      
+      	// Le flux OAuth 2.0 requiert des 'Scopes', pour Microsoft, les 'Scopes' correspondent aux permissions
+      	// demandées par l'application pour se connecter à un compte utilisateur. 
+      	// Lors de la phase d'identification, Microsoft demandera à l'utilisateur s'il accepte de donner accès aux
+      	// informations liées à ses permissions.
+      	m_oServiceOAuth..Scope						= "wl.basic" 	// Accès au profil de l'utilisateur
+      	
+      	// Décrit le service OAuth de Microsoft
+      	// Le flux OAuth 2.0 nécessite deux points d'accès :
+      	// - un point d'accès pour authentifier l'utilisateur
+      	// - un point d'accès pour l'obtention d'un 'AccessToken'
+      	m_oServiceOAuth..URLAuth 					= "https://login.live.com/oauth20_authorize.srf"
+      	m_oServiceOAuth..URLToken					= "https://login.live.com/oauth20_token.srf"
+      	m_oServiceOAuth..ParamètresSupplémentaires	= "display=popup"
+      
+      	// L'URL de callback ('redirect_uri', 'callback URL', ou encore 'URL du site') dépend de la valeur spécifiée dans les paramètres de votre application OAuth
+      	// décrite sur les sites comme dev.twitter.com/apps, developers.facebook.com/apps, code.google.com/apis/console, ...
+      	// Généralement, l'URL doit exister et la valeur décrite ici doit absolument correspondre.
+      	m_oServiceOAuth..URLRedirection 			= "http://localhost:9000/"
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1742254806572618163
+     type_code : 28
+     code : |1-
+      PROCEDURE Destructeur()
+     type : 655360
+   -
+     name : LectureProfilUtilisateur
+     internal_properties : CAAAAAgAAAAZ286JyF9zJJq0oPf4CYPeOZAgX9jlbW0DDsa70N39ceKVWlNkzNKNz09bocYQ6QNjbvKHJMup5DplUTa/Uo8E8Op3sGjs8GvobgkD5FbmoFW7TbeQY1ITBDhz/lTWrIyhbOQXGFuKKWJUwdpC3cbAMB9sWCV/OHTEUNdLyufFLExdTg7RPBmUVufsz6EEXg==
+     procedure_id : 1742254806572683699
+     type_code : 12
+     code : |1-
+      // Résumé : Lit le profil utilisateur
+      // Syntaxe :
+      //[ <Résultat> = ] LectureProfilUtilisateur ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	OAuthWebUser : Informations sur l'utilisateur
+      //
+      PROCEDURE virtuelle protegee LectureProfilUtilisateur()
+      
+      	// Les informations basique du profil utilisateur Microsoft sont décrites à l'adresse
+      	// https://msdn.microsoft.com/en-us/library/office/dn659736.aspx#Requesting_info
+      		
+      	// Exemple :
+      	//		{
+      	//			"id" : "contact.c1678ab4000000000000000000000000",
+      	//			"first_name" : "Roberto",
+      	//			"last_name" : "Tamburello",
+      	//			"name" : "Roberto Tamburello",
+      	//			"gender" : "male",
+      	//			"locale" : "en_US"
+      	//		} 
+      	
+      	clInfo 		est un OAuthWebUser
+      	vInfo 		est un variant
+      	oRequête 	est une httpRequête
+      	oRéponse 	est une httpRéponse
+      	
+      	oRequête..URL 		= "https://apis.live.net/v[%LIVEAPI_VERSION%]/me"
+      	oRequête..AuthToken = m_oToken
+      	oRequête..Méthode	= httpGet
+      	
+      	// Exécute la requête permettant d'obtenir les informations du profil de l'utilisateur connecté
+      	oRéponse <- HTTPEnvoie(oRequête)
+      	SI PAS ErreurDétectée _ET_ PAS oRéponse..CodeEtat >= 400 ALORS
+      		
+      		// Décode la réponse JSON contenu dans le message
+      		vInfo = JSONVersVariant(oRéponse..Contenu)
+      		
+      		// Recopie les données lues
+      		// Attention, les chaînes sont au format ANSI / UTF-8
+      		// Pour les afficher, il est nécessaire d'utiliser AnsiVersUnicode(<chaîne>, alphabetUTF8)
+      		clInfo.ID 			= vInfo.id
+      		clInfo.Nom 			= vInfo.name
+      		clInfo.NomAffiché	= vInfo.name
+      	FIN
+      		
+      renvoyer clInfo
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x10d99a5b3864fcbe
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

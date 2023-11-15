@@ -1,0 +1,125 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : WD OAuth
+ major_version : 28
+ minor_version : 0
+ type : 4097
+ description : ""
+ subtype : 0
+project :
+ identifier : 0x0
+ internal_properties : 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
+ configurations :
+  -
+    name : Exécutable Windows 32 bits
+    internal_properties : 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
+    configuration_id : 2895025668252287897
+    type : 1
+    generation_name : WD OAuth.exe
+    version :
+     major_version : 1
+     generation_version : 1
+     internal_generation_version : 1
+    icon_filename : .\oauth_wdwb.ico
+    language : 1
+ elements :
+  identifier : 0x40aa550c0042c4c9
+  elements :
+   -
+     name : GoogleLogin
+     identifier : 0x40b393f1002f344b
+     internal_properties : CAAAAAgAAAB41qD8S3A4Y2DR9cxNRDAJqh+pedgNR+2edThiZds51yWJK4KhpzFITfPty0uFfXNd5Q==
+     physical_name : .\GoogleLogin.wdc
+     type : 4
+   -
+     name : FEN_EXEMPLE
+     identifier : 0x40b3966c0031e468
+     internal_properties : CAAAAAgAAACB/fktmsdvAMNwlO9YYBFaG2hWPgEGXDy+DXZsbaPzDffZ/aCGuk5nrJIM9Lw0zDyEjA==
+     physical_name : .\FEN_EXEMPLE.wdw
+     type : 2
+   -
+     name : OAuthAppLogin
+     identifier : 0x40b393f20031369c
+     internal_properties : CAAAAAgAAADQLggUk8hge9h5reS13rwd8kO5UVSR1PS+zVYM001P6dMzQfw5z1lwpZsF87Mt1cs1PQ==
+     physical_name : .\OAuthAppLogin.wdc
+     type : 4
+   -
+     name : OAuthWebUser
+     identifier : 0x40b393f300333999
+     internal_properties : CAAAAAgAAABDP7vv3Imhuhm66qHi9J/kBbbgwOcMun6eGSa8KfefUecFjSAEBJQtZtzGMvLuin5Gzg==
+     physical_name : .\OAuthWebUser.wdc
+     type : 4
+   -
+     name : MicrosoftLogin
+     identifier : 0x482dbb8600775b58
+     internal_properties : CAAAAAgAAABj31tPfCmBmrkaWEe2SBmg0Y5khCcM4uqWz4DSG8VJ39HD+9CkHEoNBjymEpJOKp5m7g==
+     physical_name : .\MicrosoftLogin.wdc
+     type : 4
+  other_elements : []
+  net_assemblies : []
+  uwp_api : []
+  external_components : []
+  internal_components : []
+ report_and_queries_enabled : false
+ common_generation_directory : true
+ languages :
+  - fr-FR
+ code_elements :
+  internal_properties : CAAAAAgAAABW0CW33dihIJhBGtsdw2VHmbzhSpvPAvtchtYKdQYY+4CX1iniVrKXZ+D8YDU/zvt2G6izB0ECLCKjiw4Ac5Hyz29ZKg==
+  type_code : 0
+  p_codes :
+   -
+     code : |1-
+      
+     type : 196608
+   -
+     code : |1-
+      
+     type : 196610
+   -
+     code : |1-
+      
+     type : 196619
+   -
+     code : |1-
+      
+     type : 196621
+   -
+     type : 196627
+     enabled : false
+  orphans :
+   -
+     name : Exécutable Windows 32 bits
+     identifier : 0x40aa550c0043c4c9
+     code_elements :
+      type_code : 159
+      p_codes : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+rad :
+ internal_properties : CAAAAAgAAABhIL0UXeZmxDJxY3Xy0Q==
+project_explorer :
+ explorer_type : project
+ children :
+  -
+    explorer_type : classes
+    children :
+     -
+       name : Sources OAuth
+       explorer_type : custom_folder
+       children :
+        -
+          name : OAuthAppLogin
+          explorer_type : element
+          type : 4
+        -
+          name : OAuthWebUser
+          explorer_type : element
+          type : 4
+resources :
+ string_res :
+  identifier : 0x0
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAAAd98VSJfHHqE3P0QHwrwdhn7ig8dWBR6valpUTgnAMTVXiDg==

@@ -1,0 +1,185 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : OAuthAppLogin
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x10b3940102b87023
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1-
+      // Classe OAuthAppLogin
+      // Gère l'identification d'un utilisateur grâce à un service OAuth
+      OAuthAppLogin est une Classe, abstraite
+      	
+      	PROTÉGÉ
+      		
+      		m_sNom					est une chaine								// Nom du service
+      		m_oServiceOAuth			est un OAuth2Paramètres						// Paramètres OAuth
+      		m_oToken				est un AuthToken							// Token OAuth
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1203468257500033059
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(local sService est une chaine)
+      	
+      	// Conserve le nom du service
+      	// Cette valeur n'est qu'informative
+      	m_sNom = sService	
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1203468257500098595
+     type_code : 28
+     code : |1-
+      PROCEDURE Destructeur()
+     type : 655360
+   -
+     name : Connecte
+     procedure_id : 1203468257500295203
+     type_code : 12
+     code : |1-
+      // Résumé : Lance le processus de connexion
+      // Syntaxe :
+      //[ <Résultat> = ] Connecte ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	booléen : Vrai si le processus de connexion a été lancé
+      //
+      PROCEDURE Connecte() : booléen
+      
+      	si m_oServiceOAuth..ClientID = "" _ou_ m_oServiceOAuth..ClientSecret = "" ALORS
+      		ErreurDéclenche(404, "Le ClientID et/ou le ClientSecret n'ont pas été renseignés")
+      		renvoyer faux
+      	FIN
+      
+      	// Effectue la connexion OAuth
+      	m_oToken = AuthIdentifie(m_oServiceOAuth)
+      	
+      	si erreurdetectee alors
+      		ErreurPropage()
+      		renvoyer faux
+      	FIN
+      	
+      renvoyer EstConnecté
+     type : 458752
+   -
+     name : LectureProfilUtilisateur
+     procedure_id : 1203468257500360739
+     type_code : 12
+     code : |1-
+      // Résumé : Lit le profil utilisateur
+      // Syntaxe :
+      //[ <Résultat> = ] LectureProfilUtilisateur ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	OAuthWebUser : Informations sur l'utilisateur
+      //
+      PROCEDURE abstraite protegee LectureProfilUtilisateur() : OAuthWebUser
+     type : 458752
+   -
+     name : Déconnecte
+     procedure_id : 1203468257500491811
+     type_code : 12
+     code : |1-
+      // Résumé : Déconnecte
+      // Syntaxe :
+      // Déconnecte ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Déconnecte()
+      	
+      	// Réinitialise la session
+      	// Le fait de réinitialiser les données de la session fait notamment perdre le 'AccessToken'.
+      	// Cet 'AccessToken' est le seul 'élément' vous permettant de rester 'identifié' en tant qu'utilisateur sur le service
+      	VariableRAZ(m_oToken)	
+     type : 458752
+  properties :
+   -
+     name : EstConnecté
+     identifier : 0x10b3940102bd7023
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE EstConnecté()
+         // Considère comme connecté lorsqu'un AccessToken est valide
+         renvoyer ((m_oToken = Null ? Faux SINON m_oToken..Valide))
+        type : 1966080
+      -
+        code : |1-
+         PROCEDURE privee EstConnecté(Valeur <utile>)
+        type : 2031616
+     template_refs : []
+   -
+     name : UtilisateurInfo
+     identifier : 0x10b3940102be7023
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE UtilisateurInfo()
+         
+         	clUtilisateur est un OAuthWebUser
+         	
+         	// Si on est connecté
+         	si estconnecte alors
+         		
+         		// Lit les informations du profil
+         		clUtilisateur = LectureProfilUtilisateur()
+         	sinon
+         		ErreurDéclenche(500, "Non connecté")
+         	fin
+         	
+         renvoyer clUtilisateur
+        type : 1966080
+      -
+        code : |1-
+         PROCEDURE privee UtilisateurInfo(Valeur <utile>)
+        type : 2031616
+     template_refs : []
+   -
+     name : Nom
+     identifier : 0x10b39d240514237a
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE Nom()
+         RENVOYER m_sNom
+        type : 1966080
+      -
+        code : |1-
+         PROCEDURE privee Nom(Valeur <utile>)
+        type : 2031616
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x10d99a5b3856fcaf
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
